@@ -72,7 +72,7 @@ class C3TTClient:
         hash_ = hmac.new(bytes(self.secret, 'utf-8'), bytes(sig_args, 'utf-8'), hashlib.sha256)
         return hash_.hexdigest()
 
-    def _open_rpc(self, method, ticket=None, args=None):
+    def _open_rpc(self, method, ticket=None, args=None):  # noqa: C901
         """
         create xmlrpc client
         :param method:
