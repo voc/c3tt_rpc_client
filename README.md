@@ -1,6 +1,7 @@
 # Python Client Library for C3-Ticket-Tracker
 
 Client-Library for [C3-Ticket-Tracker](https://github.com/crs-tools/tracker).
+Get it [from PyPi](https://pypi.org/project/c3tt-rpc-client/)
 
 ## Example
 
@@ -23,3 +24,14 @@ else:
     print('Set Ticket done')
     cli.set_ticket_done(ticket)
 ```
+
+## Deploying
+
+To Deploy a new Version to pypi, run `./upload_dist.sh`. This will
+
+- Clean previous Build-Results
+- Setup a venv
+- Install build/dist Tooling (built, twine, flake8)
+- Lint the Code
+- Create whl and tar.gz artifacts
+- Upload them to pypi
