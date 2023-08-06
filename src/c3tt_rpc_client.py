@@ -31,10 +31,10 @@ class C3TTClient:
     url: tracker url (without the rpc)
     """
 
-    def __init__(self, url, group, host, secret):
-        self.url = url + "rpc"
-        self.group = group
-        self.host = host
+    def __init__(self, url, token, own_hostname, secret):
+        self.url = url.rstrip("/") + "/rpc"
+        self.token = token
+        self.own_hostname = own_hostname
         self.secret = secret
 
     def _gen_signature(self, method, args):
@@ -46,7 +46,7 @@ class C3TTClient:
         :param args:
         :return: hmac signature
         """
-        sig_args = urllib.parse.quote(self.url + "&" + method + "&" + self.group + "&" + self.host + "&", "~")
+        sig_args = urllib.parse.quote(self.url + "&" + method + "&" + self.token + "&" + self.own_hostname + "&", "~")
 
         # add method args
         if len(args) > 0:
@@ -80,7 +80,7 @@ class C3TTClient:
         :param args:
         :return: attributes of the answer
         """
-        logging.debug('creating XML RPC proxy: ' + self.url + "?group=" + self.group + "&hostname=" + self.host)
+        logging.debug('creating XML RPC proxy: ' + self.url + "?group=" + self.token + "&hostname=" + self.own_hostname)
         if args is None:
             args = []
         if ticket is not None:
@@ -91,7 +91,7 @@ class C3TTClient:
                 args.insert(0, ticket['id'])
 
         try:
-            proxy = xmlrpc.client.ServerProxy(self.url + "?group=" + self.group + "&hostname=" + self.host)
+            proxy = xmlrpc.client.ServerProxy(self.url + "?group=" + self.token + "&hostname=" + self.own_hostname)
         except xmlrpc.client.Fault as err:
             msg = "A fault occurred\n"
             msg += "Fault code: %d \n" % err.faultCode
