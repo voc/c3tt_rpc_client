@@ -92,6 +92,7 @@ class C3TTClient:
 
         try:
             proxy = xmlrpc.client.ServerProxy(self.url + "?group=" + self.token + "&hostname=" + self.own_hostname)
+            proxy._ServerProxy__handler = "/rpc?group=" + self.token + "&hostname=" + self.own_hostname
         except xmlrpc.client.Fault as err:
             msg = "A fault occurred\n"
             msg += "Fault code: %d \n" % err.faultCode
