@@ -22,6 +22,8 @@ import urllib.parse
 import xml
 import xmlrpc.client
 
+from .exceptions import C3TTException
+
 
 class C3TTClient:
     """
@@ -268,7 +270,3 @@ class C3TTClient:
 
         ret = self._open_rpc('C3TT.createMetaTicket', args=args)
         return ret
-
-
-class C3TTException(Exception):
-    pass
